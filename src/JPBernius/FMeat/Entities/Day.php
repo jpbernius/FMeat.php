@@ -6,8 +6,13 @@ use ArrayIterator;
 use DateTime;
 use DateTimeInterface;
 use IteratorAggregate;
+use Traversable;
 use JPBernius\FMeat\Exeptions\DishNotFoundException;
 
+/**
+ * Class Day
+ * @package JPBernius\FMeat\Entities
+ */
 class Day implements Entity, IteratorAggregate
 {
 
@@ -17,6 +22,10 @@ class Day implements Entity, IteratorAggregate
     /** @var array */
     private $dishes = [];
 
+    /**
+     * Day constructor.
+     * @param DateTimeInterface $date
+     */
     public function __construct(DateTimeInterface $date)
     {
         $this->date = $date;
@@ -46,6 +55,9 @@ class Day implements Entity, IteratorAggregate
         return $this->dishes[$index];
     }
 
+    /**
+     * @return DateTimeInterface
+     */
     public function getDate(): DateTimeInterface
     {
         return $this->date;
@@ -68,12 +80,22 @@ class Day implements Entity, IteratorAggregate
         return $day;
     }
 
+    /**
+     * @return int
+     */
     public function getDayOfWeek(): int
     {
         return intval($this->date->format('N'));
     }
 
-    public function getIterator()
+    /**
+     * Retrieve an external iterator
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @since 5.0.0
+     */
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->dishes);
     }

@@ -10,7 +10,9 @@ namespace JPBernius\FMeat\Services;
 
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\RequestException;
 use JPBernius\FMeat\Entities\Week;
+use JPBernius\FMeat\Exeptions\NetworkingException;
 use JPBernius\FMeat\Utilities\UrlBuilder;
 use JPBernius\FMeat\Utilities\YearWeekUtil;
 
@@ -36,11 +38,15 @@ class NetworkService
     public function getWeekWithYearAndLocation(int $week, int $year, string $location): Week
     {
         $url = $this->urlBuilder->getUrlForLocationYearWeek($location, $year, $week);
-        $response = $this->httpClient->get($url);
-        $jsonResponse = (string) $response->getBody();
-        $jsonObject = json_decode($jsonResponse);
+        try {
+            $response = $this->httpClient->get($url);
+            $jsonResponse = (string)$response->getBody();
+            $jsonObject = json_decode($jsonResponse);
 
-        return Week::fromJson($jsonObject);
+            return Week::fromJson($jsonObject);
+        } catch (RequestException $requestException) {
+            throw new NetworkingException();
+        }
     }
 
     public function getCurrentWeekWithLocation(string $location): Week

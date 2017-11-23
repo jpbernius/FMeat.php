@@ -4,8 +4,8 @@ namespace JPBernius\FMeat\Entities;
 
 use ArrayIterator;
 use IteratorAggregate;
-use JPBernius\FMeat\Exeptions\DayNotFoundException;
 use Traversable;
+use JPBernius\FMeat\Exeptions\DayNotFoundException;
 
 /**
  * Class Week
@@ -81,7 +81,7 @@ class Week implements Entity, IteratorAggregate
      * <b>Traversable</b>
      * @since 5.0.0
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->days);
     }

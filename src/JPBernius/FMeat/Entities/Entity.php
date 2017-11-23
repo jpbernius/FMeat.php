@@ -2,7 +2,15 @@
 
 namespace JPBernius\FMeat\Entities;
 
+/**
+ * Interface Entity
+ * @package JPBernius\FMeat\Entities
+ */
 interface Entity
 {
-	public static function fromJson(\stdClass $jsonString);
+    /**
+     * @param \stdClass $jsonString
+     * @return mixed
+     */
+    public static function fromJson(\stdClass $jsonString);
 }

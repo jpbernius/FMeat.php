@@ -9,7 +9,7 @@
 namespace JPBernius\FMeat\Services;
 
 use DI\ContainerBuilder;
-use JPBernius\FMeat\Configurations\LocationsConfiguration;
+use JPBernius\FMeat\Configurations\Locations;
 use PHPUnit\Framework\TestCase;
 
 class NetworkServiceTest extends TestCase
@@ -36,7 +36,7 @@ class NetworkServiceTest extends TestCase
 
     public function testGetWeek47WithYear2017AndLocationFmiBistro()
     {
-        $week = $this->networkService->getWeekWithYearAndLocation(47, 2017, LocationsConfiguration::FMI_BISTRO);
+        $week = $this->networkService->getWeekWithYearAndLocation(47, 2017, Locations::FMI_BISTRO);
         $monday = $week->getDay(1);
         $mondayIterator = $monday->getIterator();
         $dish1 = $mondayIterator->current();

@@ -2,7 +2,7 @@
 
 namespace JPBernius\FMeat;
 
-use JPBernius\FMeat\Configurations\LocationsConfiguration;
+use JPBernius\FMeat\Configurations\Locations;
 use JPBernius\FMeat\Entities\Week;
 use JPBernius\FMeat\Services\NetworkService;
 use DI\ContainerBuilder;
@@ -19,8 +19,8 @@ class FMeatClient
         $this->networkService = $container->get(NetworkService::class);
     }
 
-    public function getCurrentWeek(): Week
+    public function getCurrentWeekForLocation(string $location = Locations::FMI_BISTRO): Week
     {
-        return $this->networkService->getCurrentWeekWithLocation(LocationsConfiguration::FMI_BISTRO);
+        return $this->networkService->getCurrentWeekWithLocation($location);
     }
 }

@@ -2,13 +2,15 @@
 
 namespace JPBernius\FMeat\Entities;
 
-use Iterator;
+use ArrayIterator;
+use IteratorAggregate;
+use Traversable;
 
 /**
  * Class Year
  * @package JPBernius\FMeat\Entities
  */
-class Year implements Entity, Iterator
+class Year implements Entity, IteratorAggregate
 {
     /** @var int */
     private $yearNumber;
@@ -67,40 +69,15 @@ class Year implements Entity, Iterator
         return $this->weeks[$weekNumber];
     }
 
-    //region Iterator
-
-    const WEEKS_PER_YEAR = 52;
-
-    /** @var int */
-    private $position = 0;
-
     /**
-     * @return Week
+     * Retrieve an external iterator
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @since 5.0.0
      */
-    public function current(): Week
+    public function getIterator(): Traversable
     {
-        return $this->getWeek($this->position);
+        return new ArrayIterator($this->weeks);
     }
-
-    public function next(): void
-    {
-        $this->position = ($this->position + 1) % self::WEEKS_PER_YEAR;
-    }
-
-    public function key(): int
-    {
-        return $this->position + 1;
-    }
-
-    public function valid(): bool
-    {
-        return $this->current() !== null;
-    }
-
-    public function rewind(): void
-    {
-        $this->position = 0;
-    }
-
-    //endregion
 }
