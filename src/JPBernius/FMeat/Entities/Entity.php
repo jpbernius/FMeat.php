@@ -2,11 +2,13 @@
 
 namespace JPBernius\FMeat\Entities;
 
+use JsonSerializable;
+
 /**
  * Interface Entity
  * @package JPBernius\FMeat\Entities
  */
-interface Entity
+interface Entity extends JsonSerializable
 {
     /**
      * @param \stdClass $jsonString

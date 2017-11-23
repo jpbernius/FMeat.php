@@ -27,3 +27,7 @@ foreach ($week as $day) {
   }
 }
 ```
+
+## Credits
+
+[eat-api](https://github.com/srehwald/eat-api) by [@srehwald](https://github.com/srehwald)

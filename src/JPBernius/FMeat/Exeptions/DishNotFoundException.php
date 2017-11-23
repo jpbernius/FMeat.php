@@ -1,17 +1,18 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: uni
- * Date: 23.11.17
- * Time: 11:13
- */
 
 namespace JPBernius\FMeat\Exeptions;
 
 use Exception;
 
+/**
+ * Class DishNotFoundException
+ * @package JPBernius\FMeat\Exeptions
+ */
 class DishNotFoundException extends Exception
 {
+    /**
+     * DishNotFoundException constructor.
+     */
     public function __construct()
     {
         parent::__construct("Dish not found!");

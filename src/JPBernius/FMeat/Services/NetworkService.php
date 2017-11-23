@@ -16,6 +16,10 @@ use JPBernius\FMeat\Exeptions\NetworkingException;
 use JPBernius\FMeat\Utilities\UrlBuilder;
 use JPBernius\FMeat\Utilities\YearWeekUtil;
 
+/**
+ * Class NetworkService
+ * @package JPBernius\FMeat\Services
+ */
 class NetworkService
 {
 
@@ -28,6 +32,12 @@ class NetworkService
     /** @var YearWeekUtil */
     private $yearWeekUtil;
 
+    /**
+     * NetworkService constructor.
+     * @param HttpClient $httpClient
+     * @param UrlBuilder $urlBuilder
+     * @param YearWeekUtil $yearWeekUtil
+     */
     public function __construct(HttpClient $httpClient, UrlBuilder $urlBuilder, YearWeekUtil $yearWeekUtil)
     {
         $this->httpClient = $httpClient;
@@ -35,6 +45,13 @@ class NetworkService
         $this->yearWeekUtil = $yearWeekUtil;
     }
 
+    /**
+     * @param int $week
+     * @param int $year
+     * @param string $location
+     * @return Week
+     * @throws NetworkingException
+     */
     public function getWeekWithYearAndLocation(int $week, int $year, string $location): Week
     {
         $url = $this->urlBuilder->getUrlForLocationYearWeek($location, $year, $week);
@@ -49,6 +66,10 @@ class NetworkService
         }
     }
 
+    /**
+     * @param string $location
+     * @return Week
+     */
     public function getCurrentWeekWithLocation(string $location): Week
     {
         $currentYear = $this->yearWeekUtil->getCurrentYear();

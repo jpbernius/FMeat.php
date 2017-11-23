@@ -32,7 +32,7 @@ class Year implements Entity, IteratorAggregate
     }
 
     /**
-     * @param string $jsonString
+     * @param \stdClass $jsonObject
      * @return Year
      */
     public static function fromJson(\stdClass $jsonObject): self
@@ -79,5 +79,22 @@ class Year implements Entity, IteratorAggregate
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->weeks);
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    function jsonSerialize(): array
+    {
+        return [
+            'number' => $this->yearNumber,
+            'weeks' => array_map(function(Week $week) {
+                return $week->jsonSerialize();
+            }, $this->weeks)
+        ];
     }
 }
