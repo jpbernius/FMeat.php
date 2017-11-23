@@ -2,11 +2,13 @@
 
 namespace JPBernius\FMeat\Entities;
 
+use ArrayIterator;
 use DateTime;
 use DateTimeInterface;
-use Iterator;
+use IteratorAggregate;
+use JPBernius\FMeat\Exeptions\DishNotFoundException;
 
-class Day implements Entity, Iterator
+class Day implements Entity, IteratorAggregate
 {
 
     /** @var DateTimeInterface */
@@ -20,6 +22,9 @@ class Day implements Entity, Iterator
         $this->date = $date;
     }
 
+    /**
+     * @param Dish $dish
+     */
     public function addDish(Dish $dish): void
     {
         if (!in_array($dish, $this->dishes)) {
@@ -27,6 +32,29 @@ class Day implements Entity, Iterator
         }
     }
 
+    /**
+     * @param int $index
+     * @return Dish
+     * @throws DishNotFoundException
+     */
+    public function getDish(int $index): Dish
+    {
+        if (empty($this->dishes[$index])) {
+            throw new DishNotFoundException();
+        }
+
+        return $this->dishes[$index];
+    }
+
+    public function getDate(): DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \stdClass $jsonObject
+     * @return Day
+     */
     public static function fromJson(\stdClass $jsonObject): self
     {
         $date = DateTime::createFromFormat('Y-m-d', $jsonObject->date);
@@ -45,35 +73,8 @@ class Day implements Entity, Iterator
         return intval($this->date->format('N'));
     }
 
-    //region Iterator
-
-    /** @var int */
-    private $position = 0;
-
-    public function current(): Dish
+    public function getIterator()
     {
-        return $this->dishes[$this->position];
+        return new ArrayIterator($this->dishes);
     }
-
-    public function next(): void
-    {
-        $this->position = $this->position + 1;
-    }
-
-    public function key(): int
-    {
-        return $this->position;
-    }
-
-    public function valid(): bool
-    {
-        return $this->current() !== null;
-    }
-
-    public function rewind(): void
-    {
-        $this->position = 0;
-    }
-
-    //endregion
 }

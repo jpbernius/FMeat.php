@@ -2,13 +2,16 @@
 
 namespace JPBernius\FMeat\Entities;
 
-use Iterator;
+use ArrayIterator;
+use IteratorAggregate;
+use JPBernius\FMeat\Exeptions\DayNotFoundException;
+use Traversable;
 
 /**
  * Class Week
  * @package JPBernius\FMeat\Entities
  */
-class Week implements Entity, Iterator
+class Week implements Entity, IteratorAggregate
 {
     /** @var int */
     private $weekNumber;
@@ -19,16 +22,14 @@ class Week implements Entity, Iterator
     /**
      * Week constructor.
      * @param $weekNumber
-     * @param Year|null $year
      */
-    public function __construct($weekNumber, Year $year = null)
+    public function __construct($weekNumber)
     {
         $this->weekNumber = $weekNumber;
-        $this->year = $year;
     }
 
     /**
-     * @param string $jsonString
+     * @param \stdClass $jsonObject
      * @return Week
      */
     public static function fromJson(\stdClass $jsonObject): self
@@ -61,51 +62,27 @@ class Week implements Entity, Iterator
 
     /**
      * @param int $dayOfWeek
-     * @return mixed|null
+     * @return Day
+     * @throws DayNotFoundException
      */
     public function getDay(int $dayOfWeek): Day
     {
-        if (empty($this->days[$dayOfWeek -1])) {
-            return null;
+        if (empty($this->days[$dayOfWeek - 1])) {
+            throw new DayNotFoundException();
         }
 
-        return $this->days[$dayOfWeek -1];
+        return $this->days[$dayOfWeek - 1];
     }
-
-    //region Iterator
-
-    const DAYS_PER_WEEK = 5;
-
-    /** @var int */
-    private $position = 0;
 
     /**
-     * @return Day
+     * Retrieve an external iterator
+     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
+     * @return Traversable An instance of an object implementing <b>Iterator</b> or
+     * <b>Traversable</b>
+     * @since 5.0.0
      */
-    public function current(): Day
+    public function getIterator()
     {
-        return $this->getDay($this->position);
+        return new ArrayIterator($this->days);
     }
-
-    public function next(): void
-    {
-        $this->position = ($this->position + 1) % self::DAYS_PER_WEEK;
-    }
-
-    public function key()
-    {
-        return $this->position;
-    }
-
-    public function valid(): bool
-    {
-        return $this->current() !== null;
-    }
-
-    public function rewind(): void
-    {
-        $this->position = 0;
-    }
-
-    //endregion
 }

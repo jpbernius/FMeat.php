@@ -38,9 +38,10 @@ class NetworkServiceTest extends TestCase
     {
         $week = $this->networkService->getWeekWithYearAndLocation(47, 2017, LocationsConfiguration::FMI_BISTRO);
         $monday = $week->getDay(1);
-        $dish1 = $monday->current();
-        $monday->next();
-        $dish2 = $monday->current();
+        $mondayIterator = $monday->getIterator();
+        $dish1 = $mondayIterator->current();
+        $mondayIterator->next();
+        $dish2 = $mondayIterator->current();
 
         assertThat($week->getWeekNumber(), is(equalTo(47)));
         assertThat($monday->getDayOfWeek(), is(equalTo(1)));
