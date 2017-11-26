@@ -15,6 +15,6 @@ class DayNotFoundException extends Exception
      */
     public function __construct()
     {
-        parent::__construct("Day not found");
+        parent::__construct('Day not found');
     }
 }

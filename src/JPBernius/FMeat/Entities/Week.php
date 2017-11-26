@@ -93,7 +93,7 @@ class Week implements Entity, IteratorAggregate
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    function jsonSerialize(): array
+    public function jsonSerialize(): array
     {
         return [
             'number' => $this->getWeekNumber(),

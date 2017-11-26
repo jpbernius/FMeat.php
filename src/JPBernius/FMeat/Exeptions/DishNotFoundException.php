@@ -15,6 +15,6 @@ class DishNotFoundException extends Exception
      */
     public function __construct()
     {
-        parent::__construct("Dish not found!");
+        parent::__construct('Dish not found!');
     }
 }

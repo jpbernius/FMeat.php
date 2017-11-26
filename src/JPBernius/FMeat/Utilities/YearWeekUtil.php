@@ -12,11 +12,11 @@ namespace JPBernius\FMeat\Utilities;
 class YearWeekUtil
 {
     public function getCurrentYear(): int {
-        return intval(date("Y"));
+        return intval(date('Y'));
     }
 
     public function getCurrentCalendarWeek(): int {
-        return intval(date("W"));
+        return intval(date('W'));
     }
 
 

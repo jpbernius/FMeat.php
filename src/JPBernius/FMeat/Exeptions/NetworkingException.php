@@ -15,6 +15,6 @@ class NetworkingException extends Exception
      */
     public function __construct()
     {
-        parent::__construct("Networking Error occured.");
+        parent::__construct('Networking Error occured.');
     }
 }

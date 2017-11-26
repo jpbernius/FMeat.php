@@ -25,7 +25,7 @@ class Year implements Entity, IteratorAggregate
     public function __construct(int $yearNumber = null)
     {
         if (is_null($yearNumber)) {
-            $yearNumber = intval(date("Y"));
+            $yearNumber = intval(date('Y'));
         }
 
         $this->yearNumber = $yearNumber;
@@ -88,7 +88,7 @@ class Year implements Entity, IteratorAggregate
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    function jsonSerialize(): array
+    public function jsonSerialize(): array
     {
         return [
             'number' => $this->yearNumber,

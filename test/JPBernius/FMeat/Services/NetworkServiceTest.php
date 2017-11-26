@@ -45,7 +45,7 @@ class NetworkServiceTest extends TestCase
 
         assertThat($week->getWeekNumber(), is(equalTo(47)));
         assertThat($monday->getDayOfWeek(), is(equalTo(1)));
-        assertThat($dish1->getName(), is(equalTo("Karotten Erbsen Ingwergemüse mit Schupfnudeln")));
-        assertThat($dish2->getName(), is(equalTo("Krautwickerl mit Specksoße und Kartoffelpürree")));
+        assertThat($dish1->getName(), is(equalTo('Karotten Erbsen Ingwergemüse mit Schupfnudeln')));
+        assertThat($dish2->getName(), is(equalTo('Krautwickerl mit Specksoße und Kartoffelpürree')));
     }
 }

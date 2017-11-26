@@ -69,6 +69,6 @@ class CachedNetworkService extends NetworkService
      */
     private function buildCacheKey(string $location, int $year, int $week): string
     {
-        return sprintf("%s/%s/%s", $location, $year, $week);
+        return sprintf('%s/%s/%s', $location, $year, $week);
     }
 }
