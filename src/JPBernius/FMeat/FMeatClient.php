@@ -6,6 +6,7 @@ use JPBernius\FMeat\Configurations\Locations;
 use JPBernius\FMeat\Entities\Week;
 use JPBernius\FMeat\Services\CachedNetworkService;
 use JPBernius\FMeat\Services\NetworkService;
+use JPBernius\FMeat\Utilities\YearWeekUtil;
 use DI\ContainerBuilder;
 
 /**
@@ -17,6 +18,9 @@ class FMeatClient
     /** @var NetworkService */
     private $networkService;
 
+    /** @var YearWeekUtil */
+    private $yearkWeekUtil;
+
     /**
      * FMeatClient constructor.
      * @param bool $useCaching
@@ -24,6 +28,7 @@ class FMeatClient
     public function __construct(bool $useCaching = false)
     {
         $container = ContainerBuilder::buildDevContainer();
+        $this->yearWeekUtil = $container->get(YearWeekUtil::class);
 
         if ($useCaching) {
             $this->networkService = $container->get(CachedNetworkService::class);
@@ -38,6 +43,17 @@ class FMeatClient
      */
     public function getCurrentWeekForLocation(string $location = Locations::FMI_BISTRO): Week
     {
-        return $this->networkService->getCurrentWeekWithLocation($location);
+        $currentWeek = $this->yearWeekUtil->getCurrentCalendarWeek();
+        return $this->networkService->getWeekWithLocation($currentWeek, $location);
+    }
+
+    /**
+     * @param string $location
+     * @return Week
+     */
+    public function getNextWeekForLocation(string $location = Locations::FMI_BISTRO): Week
+    {
+        $nextWeek = $this->yearWeekUtil->getNextCalendarWeek();
+        return $this->networkService->getWeekWithLocation($nextWeek, $location);
     }
 }

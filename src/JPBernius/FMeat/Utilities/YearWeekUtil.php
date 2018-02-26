@@ -8,16 +8,19 @@
 
 namespace JPBernius\FMeat\Utilities;
 
+use JPBernius\FMeat\Entities\CalendarWeek;
 
 class YearWeekUtil
 {
-    public function getCurrentYear(): int {
-        return intval(date('Y'));
+    public function getCurrentCalendarWeek(): CalendarWeek {
+        $year = intval(date('Y'));
+        $week = intval(date('W'));
+        return new CalendarWeek($year, $week);
     }
 
-    public function getCurrentCalendarWeek(): int {
-        return intval(date('W'));
+    public function getNextCalendarWeek(): CalendarWeek {
+        $year = intval(date('Y', strtotime("+1 week")));
+        $week = intval(date('W', strtotime("+1 week")));
+        return new CalendarWeek($year, $week);
     }
-
-
 }

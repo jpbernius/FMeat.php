@@ -10,6 +10,7 @@ namespace JPBernius\FMeat\Services;
 
 use DI\ContainerBuilder;
 use JPBernius\FMeat\Configurations\Locations;
+use JPBernius\FMeat\Entities\CalendarWeek;
 use PHPUnit\Framework\TestCase;
 
 class NetworkServiceTest extends TestCase
@@ -36,7 +37,7 @@ class NetworkServiceTest extends TestCase
 
     public function testGetWeek47WithYear2017AndLocationFmiBistro()
     {
-        $week = $this->networkService->getWeekWithYearAndLocation(47, 2017, Locations::FMI_BISTRO);
+        $week = $this->networkService->getWeekWithLocation(new CalendarWeek(2017, 47), Locations::FMI_BISTRO);
         $monday = $week->getDay(1);
         $mondayIterator = $monday->getIterator();
         $dish1 = $mondayIterator->current();
@@ -47,5 +48,13 @@ class NetworkServiceTest extends TestCase
         assertThat($monday->getDayOfWeek(), is(equalTo(1)));
         assertThat($dish1->getName(), is(equalTo('Karotten Erbsen Ingwergemüse mit Schupfnudeln')));
         assertThat($dish2->getName(), is(equalTo('Krautwickerl mit Specksoße und Kartoffelpürree')));
+    }
+
+    /**
+     * @expectedException \JPBernius\FMeat\Exeptions\NetworkingException
+     */
+    public function testGetWeek1WithYear2000AndLocationFmiBistroShouldFail()
+    {
+        $week = $this->networkService->getWeekWithLocation(new CalendarWeek(2000, 1), Locations::FMI_BISTRO);
     }
 }

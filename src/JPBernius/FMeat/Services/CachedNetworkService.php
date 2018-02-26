@@ -4,8 +4,10 @@ namespace JPBernius\FMeat\Services;
 
 use GuzzleHttp\Client as HttpClient;
 use JPBernius\FMeat\Utilities\UrlBuilder;
-use JPBernius\FMeat\Utilities\YearWeekUtil;
-use JPBernius\FMeat\Entities\Week;
+use JPBernius\FMeat\Entities\{
+    CalendarWeek,
+    Week
+};
 use Stash\Driver\FileSystem as FileSystemDriver;
 use Stash\Pool as CachePool;
 
@@ -22,14 +24,13 @@ class CachedNetworkService extends NetworkService
      * CachedNetworkService constructor.
      * @param HttpClient $httpClient
      * @param UrlBuilder $urlBuilder
-     * @param YearWeekUtil $yearWeekUtil
      * @param FileSystemDriver $fileSystemDriver
      * @param CachePool $pool
      */
-    public function __construct(HttpClient $httpClient, UrlBuilder $urlBuilder, YearWeekUtil $yearWeekUtil,
+    public function __construct(HttpClient $httpClient, UrlBuilder $urlBuilder,
                                 FileSystemDriver $fileSystemDriver, CachePool $pool)
     {
-        parent::__construct($httpClient, $urlBuilder, $yearWeekUtil);
+        parent::__construct($httpClient, $urlBuilder);
 
         $pool->setDriver($fileSystemDriver);
         $this->pool = $pool;
@@ -41,9 +42,9 @@ class CachedNetworkService extends NetworkService
      * @param string $location
      * @return Week
      */
-    public function getWeekWithYearAndLocation(int $week, int $year, string $location): Week
+    public function getWeekWithLocation(CalendarWeek $calendarWeek, string $location): Week
     {
-        $cacheKey = $this->buildCacheKey($location, $year, $week);
+        $cacheKey = $this->buildCacheKey($location, $calendarWeek);
         $cacheItem = $this->pool->getItem($cacheKey);
 
         if($cacheItem->isHit()) {
@@ -53,7 +54,7 @@ class CachedNetworkService extends NetworkService
             return Week::fromJson($jsonObject);
         }
 
-        $retrievedWeek = parent::getWeekWithYearAndLocation($week, $year, $location);
+        $retrievedWeek = parent::getWeekWithLocation($calendarWeek, $location);
 
         $retrievedWeekJson = json_encode($retrievedWeek);
         $this->pool->save($cacheItem->set($retrievedWeekJson));
@@ -67,8 +68,8 @@ class CachedNetworkService extends NetworkService
      * @param int $week
      * @return string
      */
-    private function buildCacheKey(string $location, int $year, int $week): string
+    private function buildCacheKey(string $location, CalendarWeek $calendarWeek): string
     {
-        return sprintf('%s/%s/%s', $location, $year, $week);
+        return sprintf('%s/%s/%s', $location, $calendarWeek->getYear(), $calendarWeek->getWeek());
     }
 }

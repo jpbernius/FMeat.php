@@ -11,10 +11,12 @@ namespace JPBernius\FMeat\Services;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
-use JPBernius\FMeat\Entities\Week;
+use JPBernius\FMeat\Entities\{
+    CalendarWeek,
+    Week
+};
 use JPBernius\FMeat\Exeptions\NetworkingException;
 use JPBernius\FMeat\Utilities\UrlBuilder;
-use JPBernius\FMeat\Utilities\YearWeekUtil;
 
 /**
  * Class NetworkService
@@ -29,20 +31,15 @@ class NetworkService
     /** @var UrlBuilder */
     private $urlBuilder;
 
-    /** @var YearWeekUtil */
-    private $yearWeekUtil;
-
     /**
      * NetworkService constructor.
      * @param HttpClient $httpClient
      * @param UrlBuilder $urlBuilder
-     * @param YearWeekUtil $yearWeekUtil
      */
-    public function __construct(HttpClient $httpClient, UrlBuilder $urlBuilder, YearWeekUtil $yearWeekUtil)
+    public function __construct(HttpClient $httpClient, UrlBuilder $urlBuilder)
     {
         $this->httpClient = $httpClient;
         $this->urlBuilder = $urlBuilder;
-        $this->yearWeekUtil = $yearWeekUtil;
     }
 
     /**
@@ -52,9 +49,9 @@ class NetworkService
      * @return Week
      * @throws NetworkingException
      */
-    public function getWeekWithYearAndLocation(int $week, int $year, string $location): Week
+    public function getWeekWithLocation(CalendarWeek $calendarWeek, string $location): Week
     {
-        $url = $this->urlBuilder->getUrlForLocationYearWeek($location, $year, $week);
+        $url = $this->urlBuilder->getUrlForLocationYearWeek($location, $calendarWeek);
         try {
             $response = $this->httpClient->get($url);
             $jsonResponse = (string)$response->getBody();
@@ -64,18 +61,6 @@ class NetworkService
         } catch (RequestException $requestException) {
             throw new NetworkingException();
         }
-    }
-
-    /**
-     * @param string $location
-     * @return Week
-     */
-    public function getCurrentWeekWithLocation(string $location): Week
-    {
-        $currentYear = $this->yearWeekUtil->getCurrentYear();
-        $currentWeek = $this->yearWeekUtil->getCurrentCalendarWeek();
-
-        return $this->getWeekWithYearAndLocation($currentWeek, $currentYear, $location);
     }
 
 }

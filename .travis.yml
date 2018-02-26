@@ -20,7 +20,7 @@ before_script:
 
 script:
   - composer run test
-  - vendor/bin/phpunit --coverage-clover=coverage.clover
+  - composer run clover
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar

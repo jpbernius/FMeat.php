@@ -23,7 +23,8 @@
         "hamcrest/hamcrest-php": "^2.0"
     },
   "scripts": {
-    "test": "phpunit"
+    "test": "phpunit",
+    "clover": "phpunit --coverage-clover=coverage.clover"
   },
   "autoload": {
     "psr-4": {
