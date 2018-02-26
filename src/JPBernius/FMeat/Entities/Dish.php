@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: uni
- * Date: 22.11.17
- * Time: 17:48
- */
 
 namespace JPBernius\FMeat\Entities;
 

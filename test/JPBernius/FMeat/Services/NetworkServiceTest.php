@@ -55,6 +55,6 @@ class NetworkServiceTest extends TestCase
      */
     public function testGetWeek1WithYear2000AndLocationFmiBistroShouldFail()
     {
-        $week = $this->networkService->getWeekWithLocation(new CalendarWeek(2000, 1), Locations::FMI_BISTRO);
+        $this->networkService->getWeekWithLocation(new CalendarWeek(2000, 1), Locations::FMI_BISTRO);
     }
 }
