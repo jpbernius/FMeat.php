@@ -19,11 +19,13 @@ class FMeatClient
     private $networkService;
 
     /** @var YearWeekUtil */
-    private $yearkWeekUtil;
+    private $yearWeekUtil;
 
     /**
      * FMeatClient constructor.
      * @param bool $useCaching
+     * @throws \DI\DependencyException
+     * @throws \DI\NotFoundException
      */
     public function __construct(bool $useCaching = false)
     {
@@ -40,6 +42,7 @@ class FMeatClient
     /**
      * @param string $location
      * @return Week
+     * @throws Exeptions\NetworkingException
      */
     public function getCurrentWeekForLocation(string $location = Locations::FMI_BISTRO): Week
     {
@@ -50,6 +53,7 @@ class FMeatClient
     /**
      * @param string $location
      * @return Week
+     * @throws Exeptions\NetworkingException
      */
     public function getNextWeekForLocation(string $location = Locations::FMI_BISTRO): Week
     {

@@ -37,10 +37,10 @@ class CachedNetworkService extends NetworkService
     }
 
     /**
-     * @param int $week
-     * @param int $year
+     * @param CalendarWeek $calendarWeek
      * @param string $location
      * @return Week
+     * @throws \JPBernius\FMeat\Exeptions\NetworkingException
      */
     public function getWeekWithLocation(CalendarWeek $calendarWeek, string $location): Week
     {
@@ -64,8 +64,7 @@ class CachedNetworkService extends NetworkService
 
     /**
      * @param string $location
-     * @param int $year
-     * @param int $week
+     * @param CalendarWeek $calendarWeek
      * @return string
      */
     private function buildCacheKey(string $location, CalendarWeek $calendarWeek): string

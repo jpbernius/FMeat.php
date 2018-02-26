@@ -8,7 +8,6 @@
 
 namespace JPBernius\FMeat\Services;
 
-
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\RequestException;
 use JPBernius\FMeat\Entities\{
@@ -43,8 +42,7 @@ class NetworkService
     }
 
     /**
-     * @param int $week
-     * @param int $year
+     * @param CalendarWeek $calendarWeek
      * @param string $location
      * @return Week
      * @throws NetworkingException
