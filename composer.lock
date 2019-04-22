@@ -736,16 +736,16 @@
         },
         {
             "name": "tedivm/stash",
-            "version": "v0.15.1",
+            "version": "v0.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tedious/Stash.git",
-                "reference": "a6f14f7787e765efbc8f1a871519f74caa0fd6db"
+                "reference": "7a6a74106c49b1bdc3a10a725b03c509dc773dbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tedious/Stash/zipball/a6f14f7787e765efbc8f1a871519f74caa0fd6db",
-                "reference": "a6f14f7787e765efbc8f1a871519f74caa0fd6db",
+                "url": "https://api.github.com/repos/tedious/Stash/zipball/7a6a74106c49b1bdc3a10a725b03c509dc773dbb",
+                "reference": "7a6a74106c49b1bdc3a10a725b03c509dc773dbb",
                 "shasum": ""
             },
             "require": {
@@ -792,7 +792,7 @@
                 "redis",
                 "sessions"
             ],
-            "time": "2018-02-19T21:12:55+00:00"
+            "time": "2019-03-09T21:04:14+00:00"
         }
     ],
     "packages-dev": [
