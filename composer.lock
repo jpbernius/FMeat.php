@@ -634,7 +634,7 @@
         },
         {
             "name": "symfony/polyfill-php56",
-            "version": "v1.13.0",
+            "version": "v1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php56.git",
