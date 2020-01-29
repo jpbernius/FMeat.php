@@ -21,7 +21,7 @@ interface Locations
      * IPP Bistro Garching
      * Konradhof Catering - Max-Planck-Institut für Plasmaphysik
      * Boltzmannstraße 2, 85748 Garching
-     * @url https://konradhof-catering.de/ipp/
+     * @url https://konradhof-catering.com/ipp/
      */
     const IPP_BISTRO = 'ipp-bistro';
 
